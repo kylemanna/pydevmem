@@ -134,7 +134,7 @@ class DevMem:
         # Compensate for the base_address not being what the user requested
         # and then seek to the aligned offset.
         virt_base_addr = self.base_addr_offset & self.mask
-        mem.seek(virt_base_addr)
+        mem.seek(virt_base_addr + offset)
 
         # Read length words of size self.word and return it
         data = []
@@ -142,7 +142,7 @@ class DevMem:
             data.append(struct.unpack('I', mem.read(self.word))[0])
 
         abs_addr = self.base_addr + virt_base_addr
-        return DevMemBuffer(abs_addr, data)
+        return DevMemBuffer(abs_addr + offset, data)
 
 
     """
