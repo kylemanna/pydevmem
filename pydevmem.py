@@ -1,4 +1,4 @@
-#!/usr/bin/env python -S
+#!/usr/bin/env python
 """
 This is designed primarily for use with accessing /dev/mem on OMAP platforms.
 It should work on other platforms and work to mmap() files rather then just
