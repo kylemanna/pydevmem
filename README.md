@@ -11,19 +11,19 @@ platforms to avoid data abort faults when accessing peripheral registers.
 Usage
 -----
 
-Usage: pydevmem.py [options]
+    Usage: devmem.py [options]
 
-Options:
-  -h, --help            show this help message and exit
-  -r ADDR, --read=ADDR  read a value
-  -w ADDR VALUE, --write=ADDR VALUE
-                        write a value
-  -n NUM, --num=NUM     number of words to read
-  -s WORD_SIZE, --word-size=WORD_SIZE
-                        size of word when displayed
-  -m FILE, --mmap=FILE  file to open with mmap()
-  -v                    provide more information regarding operation
-  -d                    provide debugging information
+    Options:
+      -h, --help            show this help message and exit
+      -r ADDR, --read=ADDR  read a value
+      -w ADDR VALUE, --write=ADDR VALUE
+    						write a value
+      -n NUM, --num=NUM     number of words to read
+      -s WORD_SIZE, --word-size=WORD_SIZE
+    						size of word when displayed
+      -m FILE, --mmap=FILE  file to open with mmap()
+      -v                    provide more information regarding operation
+      -d                    provide debugging information
 
 
 Speed
