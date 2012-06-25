@@ -41,7 +41,7 @@ class DevMemBuffer:
 
         i = 0
         while (i < len(d)):
-            dump.append('0x{:08x}:  '.format(self.base_addr + word_size * i))
+            dump.append('0x{0:02x}:  '.format(self.base_addr + word_size * i))
 
             max_col = i + words_per_row
             if max_col > len(d): max_col = len(d)
@@ -50,7 +50,7 @@ class DevMemBuffer:
                 # If the word is 4 bytes, then handle it and continue the
                 # loop, this should be the normal case
                 if word_size == 4:
-                    dump.append(" {:08x} ".format(d[i]))
+                    dump.append(" {0:08x} ".format(d[i]))
                     i += 1
                     continue
 
@@ -61,14 +61,14 @@ class DevMemBuffer:
                 i += 1
                 if word_size == 2:
                     dh = struct.unpack('HH', packed)
-                    dump.append(" {:04x}".format(dh[0]))
-                    dump.append(" {:04x}  ".format(dh[1]))
+                    dump.append(" {0:04x}".format(dh[0]))
+                    dump.append(" {0:04x}  ".format(dh[1]))
                 elif word_size == 1:
                     db = struct.unpack('BBBB', packed)
-                    dump.append(" {:02x}".format(db[0]))
-                    dump.append(" {:02x} ".format(db[1]))
-                    dump.append(" {:02x}".format(db[2]))
-                    dump.append(" {:02x}  ".format(db[3]))
+                    dump.append(" {0:02x}".format(db[0]))
+                    dump.append(" {0:02x} ".format(db[1]))
+                    dump.append(" {0:02x}".format(db[2]))
+                    dump.append(" {0:02x}  ".format(db[3]))
 
             dump.append('\n')
 
@@ -165,7 +165,7 @@ class DevMem:
 
         # Read until the end of our aligned address
         for i in range(0, len(din), self.word):
-            self.debug('writing at position = {}: 0x{:x}'.
+            self.debug('writing at position = {0}: 0x{1:x}'.
                         format(self.mem.tell(), din[i]))
             # Write one word at a time
             self.mem.write(struct.pack('I', din[i]))
@@ -174,7 +174,7 @@ class DevMem:
         self._debug = value
 
     def debug(self, debug_str):
-        if self._debug: print 'DevMem Debug: {}'.format(debug_str)
+        if self._debug: print 'DevMem Debug: {0}'.format(debug_str)
 
 
 """ Main
