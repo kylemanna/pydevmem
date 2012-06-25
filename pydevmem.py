@@ -45,36 +45,34 @@ class DevMemBuffer:
         d = self.data
         dump = []
 
-        i = 0
-        while (i < len(d)):
-            dump.append('0x{0:02x}:  '.format(self.base_addr + word_size * i))
+        word = 0
+        while (word < len(d)):
+            dump.append('0x{0:02x}:  '.format(self.base_addr
+                                              + word_size * word))
 
-            max_col = i + words_per_row
+            max_col = word + words_per_row
             if max_col > len(d): max_col = len(d)
 
-            while (i < max_col):
+            while (word < max_col):
                 # If the word is 4 bytes, then handle it and continue the
                 # loop, this should be the normal case
                 if word_size == 4:
-                    dump.append(" {0:08x} ".format(d[i]))
-                    i += 1
+                    dump.append(" {0:08x} ".format(d[word]))
+                    word += 1
                     continue
 
                 # Otherwise the word_size is not an int, pack it so it can be
                 # un-packed to the desired word size.  This should blindly
                 # handle endian problems (Verify?)
-                packed = struct.pack('I',(d[i]))
-                i += 1
+                packed = struct.pack('I',(d[word]))
                 if word_size == 2:
                     dh = struct.unpack('HH', packed)
                     dump.append(" {0:04x}".format(dh[0]))
-                    dump.append(" {0:04x}  ".format(dh[1]))
+                    word += 1
                 elif word_size == 1:
                     db = struct.unpack('BBBB', packed)
                     dump.append(" {0:02x}".format(db[0]))
-                    dump.append(" {0:02x} ".format(db[1]))
-                    dump.append(" {0:02x}".format(db[2]))
-                    dump.append(" {0:02x}  ".format(db[3]))
+                    word += 1
 
             dump.append('\n')
 
