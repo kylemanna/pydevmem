@@ -160,6 +160,9 @@ class DevMem:
         self.debug('writing {0} bytes to offset {1}'.
                 format(len(din), hex(offset)))
 
+        # Make reading easier (and faster... won't resolve dot in loops)
+        mem = self.mem
+
         # Compensate for the base_address not being what the user requested
         offset += self.base_addr_offset
 
@@ -167,14 +170,15 @@ class DevMem:
         if (offset & ~self.mask): raise AssertionError
 
         # Seek to the aligned offset
-        self.mem.seek(offset)
+        virt_base_addr = self.base_addr_offset & self.mask
+        mem.seek(virt_base_addr + offset)
 
         # Read until the end of our aligned address
         for i in range(0, len(din), self.word):
             self.debug('writing at position = {0}: 0x{1:x}'.
                         format(self.mem.tell(), din[i]))
             # Write one word at a time
-            self.mem.write(struct.pack('I', din[i]))
+            mem.write(struct.pack('I', din[i]))
 
     def debug_set(self, value):
         self._debug = value
