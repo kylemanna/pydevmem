@@ -220,11 +220,11 @@ def main():
     (options, args) = parser.parse_args()
 
     # Check for sane arguments
-    if options.write and options.read:
+    if options.write is not None and options.read is not None:
         parser.print_help()
         print "\nError: Both read and write are specified"
         return -1
-    elif not options.write and not options.read:
+    elif options.write is None and options.read is None:
         parser.print_help()
         print "\nError: Neither read or write are specified"
         return -1
@@ -241,13 +241,13 @@ def main():
         return -1
 
     # Only support writing one word at a time, force this
-    if options.write and options.num != 1:
+    if options.write is not None and options.num != 1:
         print "Warning: Forcing number of words to 1 for set operation\n"
         options.num = 1
 
     # Determine base address to operate on
     addr = options.read
-    if options.write: addr = options.write[0]
+    if options.write is not None: addr = options.write[0]
 
     # Create the Dev Mem object that does the magic
     mem = DevMem(addr, length=options.num, filename=options.mmap,
@@ -257,7 +257,7 @@ def main():
         mem.debug_set(1)
 
     # Perform the actual read or write
-    if options.write:
+    if options.write is not None:
         if options.verbose:
             print "Value before write:\t{0}".format(
                   mem.read(0x0, options.num).hexdump(options.word_size))
