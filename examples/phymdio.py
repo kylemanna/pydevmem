@@ -73,15 +73,15 @@ def dump_mdio(base_addr):
                 "MII Manf Specific"]
 
     for i in range(4):
-        print "{0!s:38} {1}".format(cpsw_name[i] + ' Register:',
-                                    phy.get_cpsw(i << 2))
+        print("{0!s:38} {1}".format(cpsw_name[i] + ' Register:',
+                                    phy.get_cpsw(i << 2)))
     
     # Blank line 
-    print
+    print()
 
     for i in range(0x20):
-        print "{0!s:38} {1}".format(mii_name[i] + ' Register:',
-                                    phy.get_mdio(i).hexdump(2, 2))
+        print("{0!s:38} {1}".format(mii_name[i] + ' Register:',
+                                    phy.get_mdio(i).hexdump(2, 2)))
 
 if __name__ ==  '__main__':
 
