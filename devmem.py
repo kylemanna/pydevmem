@@ -117,11 +117,13 @@ class DevMem:
                 format(hex(self.base_addr), hex(self.length), self.fname))
 
         # Open file and mmap
-        f = os.open(self.fname, os.O_RDWR | os.O_SYNC)
-        self.mem = mmap.mmap(f, self.length, mmap.MAP_SHARED,
+        self.f = os.open(self.fname, os.O_RDWR | os.O_SYNC)
+        self.mem = mmap.mmap(self.f, self.length, mmap.MAP_SHARED,
                 mmap.PROT_READ | mmap.PROT_WRITE,
                 offset=self.base_addr)
 
+    def __del__(self):
+        os.close(self.f)
 
     """
     Read length number of words from offset
