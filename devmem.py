@@ -158,7 +158,7 @@ class DevMem:
         if offset < 0 or len(din) <= 0: raise AssertionError
 
         self.debug('writing {0} bytes to offset {1}'.
-                format(len(din), hex(offset)))
+                format(len(din) * self.word, hex(offset)))
 
         # Make reading easier (and faster... won't resolve dot in loops)
         mem = self.mem
@@ -174,7 +174,7 @@ class DevMem:
         mem.seek(virt_base_addr + offset)
 
         # Read until the end of our aligned address
-        for i in range(0, len(din), self.word):
+        for i in range(len(din)):
             self.debug('writing at position = {0}: 0x{1:x}'.
                         format(self.mem.tell(), din[i]))
             # Write one word at a time
