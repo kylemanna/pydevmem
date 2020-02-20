@@ -164,7 +164,8 @@ class DevMem:
         mem = self.mem
 
         # Compensate for the base_address not being what the user requested
-        offset += self.base_addr_offset
+        # fix double plus offset
+        #offset += self.base_addr_offset
 
         # Check that the operation is going write to an aligned location
         if (offset & ~self.mask): raise AssertionError
