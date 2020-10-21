@@ -91,6 +91,7 @@ class DevMem:
     # Size of a word that will be used for reading/writing
     word = 4
     mask = ~(word - 1)
+    f = None
 
     def __init__(self, base_addr, length = 1, filename = '/dev/mem',
                  debug = 0):
@@ -123,7 +124,8 @@ class DevMem:
                 offset=self.base_addr)
 
     def __del__(self):
-        os.close(self.f)
+        if self.f:
+            os.close(self.f)
 
     """
     Read length number of words from offset
