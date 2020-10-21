@@ -19,11 +19,8 @@ import mmap
 import struct
 import optparse
 
-""" DevMemBuffer
-This class holds data for objects returned from DevMem class
-It allows an easy way to print hex data
-"""
 class DevMemBuffer:
+    """This class holds data for objects returned from DevMem class. It allows an easy way to print hex data"""
 
     def __init__(self, base_addr, data):
         self.data = data
@@ -84,10 +81,9 @@ class DevMemBuffer:
         return self.hexdump()
 
 
-""" DevMem
-Class to read and write data aligned to word boundaries of /dev/mem
-"""
 class DevMem:
+    """Class to read and write data aligned to word boundaries of /dev/mem"""
+
     # Size of a word that will be used for reading/writing
     word = 4
     mask = ~(word - 1)
@@ -127,10 +123,9 @@ class DevMem:
         if self.f:
             os.close(self.f)
 
-    """
-    Read length number of words from offset
-    """
     def read(self, offset, length):
+        """Read length number of words from offset"""
+
         if offset < 0 or length < 0: raise AssertionError
 
         # Make reading easier (and faster... won't resolve dot in loops)
@@ -153,10 +148,9 @@ class DevMem:
         return DevMemBuffer(abs_addr + offset, data)
 
 
-    """
-    Write length number of words to offset
-    """
     def write(self, offset, din):
+        """Write length number of words to offset"""
+
         if offset < 0 or len(din) <= 0: raise AssertionError
 
         self.debug('writing {0} bytes to offset {1}'.
@@ -190,11 +184,9 @@ class DevMem:
         if self._debug: print('DevMem Debug: {0}'.format(debug_str))
 
 
-""" Main
-If this is run as a script (rather then imported as a module) it provides
-some basic functionality out of the box
-"""
 def main():
+    """If this is run as a script (rather then imported as a module) it provides some basic functionality out of the box"""
+
     parser = optparse.OptionParser()
 
     parser.add_option("-r", "--read", dest="read", metavar="ADDR",
