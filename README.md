@@ -1,6 +1,8 @@
 Python DevMem
 =============
 
+[![](https://img.shields.io/pypi/v/devmem.svg?maxAge=3600)](https://pypi.org/project/devmem/)
+
 This is designed primarily for use with accessing /dev/mem on OMAP platforms.
 It should work on other platforms and work to mmap() files rather then just
 /dev/mem, but these use cases aren't well tested.
