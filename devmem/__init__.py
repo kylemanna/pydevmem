@@ -49,26 +49,24 @@ class DevMemBuffer:
             max_col = word + words_per_row
             if max_col > len(d): max_col = len(d)
 
-            while (word < max_col):
+            while word < max_col:
                 # If the word is 4 bytes, then handle it and continue the
                 # loop, this should be the normal case
                 if word_size == 4:
                     dump.append(" {0:08x} ".format(d[word]))
-                    word += 1
-                    continue
 
                 # Otherwise the word_size is not an int, pack it so it can be
                 # un-packed to the desired word size.  This should blindly
                 # handle endian problems (Verify?)
-                packed = struct.pack('I',(d[word]))
-                if word_size == 2:
-                    dh = struct.unpack('HH', packed)
-                    dump.append(" {0:04x}".format(dh[0]))
-                    word += 1
+                elif word_size == 2:
+                    for halfword in struct.unpack('HH', struct.pack('I',(d[word]))):
+                        dump.append(" {0:04x}".format(halfword))
+
                 elif word_size == 1:
-                    db = struct.unpack('BBBB', packed)
-                    dump.append(" {0:02x}".format(db[0]))
-                    word += 1
+                    for byte in struct.unpack('BBBB', struct.pack('I',(d[word]))):
+                        dump.append(" {0:02x}".format(byte))
+
+                word += 1
 
             dump.append('\n')
 
