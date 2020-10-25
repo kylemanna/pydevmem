@@ -105,14 +105,19 @@ def main() -> int:
     addr = args.write[0] if args.write else args.read
 
     # Create the Dev Mem object that does the magic
-    mem = DevMem(addr, length=args.num, filename=args.mmap, debug=args.debug)
+    mem = DevMem(
+        addr, length=args.num, filename=args.mmap, debug=args.debug, word=args.word_size
+    )
+
+    bytes_per_row = 16
+    words_per_row = int(bytes_per_row / args.word_size)
 
     # Perform the actual read or write
     if args.write is not None:
         if args.verbose:
             print(
                 "Value before write:\t{0}".format(
-                    mem.read(0x0, args.num).hexdump(args.word_size)
+                    mem.read(0x0, args.num).hexdump(words_per_row)
                 )
             )
 
@@ -121,11 +126,11 @@ def main() -> int:
         if args.verbose:
             print(
                 "Value after write:\t{0}".format(
-                    mem.read(0x0, args.num).hexdump(args.word_size)
+                    mem.read(0x0, args.num).hexdump(words_per_row)
                 )
             )
     else:
-        print(mem.read(0x0, args.num).hexdump(args.word_size))
+        print(mem.read(0x0, args.num).hexdump(words_per_row))
 
 
 if __name__ == "__main__":
