@@ -144,7 +144,12 @@ def main():
 
     elif args.binary:
         buf = mem.read(0x0, args.num)
-        sys.stdout.buffer.write(buf.data)
+
+        # TODO Delete when dropping Python2 support
+        if sys.version_info.major == 2:
+            sys.stdout.write(buf.data)
+        else:
+            sys.stdout.buffer.write(buf.data)
 
     else:
         print(mem.read(0x0, args.num).hexdump(words_per_row))
