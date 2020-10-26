@@ -16,7 +16,7 @@ from . import DevMem
 # * https://bugs.python.org/issue22240
 # pip workaround:
 # * https://github.com/pypa/pip/blob/08c99b6e00135ca8df2e98db58aa0b701b971c64/src/pip/_internal/utils/misc.py#L124-L134
-def get_prog() -> str:
+def get_prog():
     """Determine the program name if invoked directly or as a module"""
 
     name = (
@@ -36,7 +36,7 @@ def get_prog() -> str:
     return name
 
 
-def main() -> int:
+def main():
     """Main function with useful demo application"""
 
     parser = argparse.ArgumentParser(prog=get_prog())
