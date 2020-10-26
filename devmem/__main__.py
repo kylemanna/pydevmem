@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# TODO delete when dropping Python 2 support
+from __future__ import print_function
+
 import argparse
 import os
 import sys
@@ -125,7 +128,8 @@ def main() -> int:
             print(
                 "Value before write:\t{0}".format(
                     mem.read(0x0, args.num).hexdump(words_per_row)
-                )
+                ),
+                file=sys.stderr,
             )
 
         mem.write(0x0, [args.write[1]])
@@ -134,7 +138,8 @@ def main() -> int:
             print(
                 "Value after write:\t{0}".format(
                     mem.read(0x0, args.num).hexdump(words_per_row)
-                )
+                ),
+                file=sys.stderr,
             )
 
     elif args.binary:

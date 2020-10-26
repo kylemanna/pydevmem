@@ -12,6 +12,8 @@ References:
     http://www.python.org/dev/peps/pep-0008/
 
 """
+# TODO delete when dropping Python 2 support
+from __future__ import print_function
 
 import os
 import sys
@@ -177,4 +179,4 @@ class DevMem:
 
     def debug(self, debug_str):
         if self._debug:
-            print("DevMem Debug: {0}".format(debug_str))
+            print("DevMem Debug: {0}".format(debug_str), file=sys.stderr)
