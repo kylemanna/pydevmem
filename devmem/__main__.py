@@ -88,6 +88,13 @@ def main() -> int:
         "-d", "--debug", action="store_true", help="provide debugging information"
     )
 
+    parser.add_argument(
+        "-b",
+        "--binary",
+        action="store_true",
+        help="output data as a binary stream",
+    )
+
     args = parser.parse_args()
 
     # Check for sane arguments
@@ -129,6 +136,11 @@ def main() -> int:
                     mem.read(0x0, args.num).hexdump(words_per_row)
                 )
             )
+
+    elif args.binary:
+        buf = mem.read(0x0, args.num)
+        sys.stdout.buffer.write(buf.data)
+
     else:
         print(mem.read(0x0, args.num).hexdump(words_per_row))
 
