@@ -19,11 +19,9 @@ from . import DevMem
 def get_prog():
     """Determine the program name if invoked directly or as a module"""
 
-    name = (
-        sys.argv[0]
-        if globals().get("__spec__") is None
-        else __spec__.name.partition(".")[0]
-    )
+    spec = globals().get("__spec__")
+    name = sys.argv[0] if spec is None else spec.name.partition(".")[0]
+
     try:
         prog = os.path.basename(sys.argv[0])
         if prog in ("__main__.py", "-c"):
